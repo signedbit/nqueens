@@ -3,11 +3,11 @@ package net.signedbit.nqueens;
 /**
  * A simple class to compute any one solution to the N-Queens problem
  * and print the board showing where the queens can be placed.
- * <p>
+ * <p/>
  * When n is 2 or 3, there is no solution. Further, when n is 1, the solution is trivial.
- * <p>
+ * <p/>
  * Since it returns the same board for every n, we could just precompute them and store as String constants.
- * <p>
+ * <p/>
  * Spec for reference:
  * A single solution, for a board of size N where N is given as an input.
  * You can assume N less than (say) 32 for a backtracking solution, or 256 for one of the more advanced algorithms.
@@ -61,15 +61,15 @@ public class NQueensProblem {
             return true;
         }
 
-        for (int i = 0; i < n; i++) {
-            if (!NQueensProblem.isAttackable(n, board, row, i)) {
-                board[row][i] = true; // place a queen here
+        for (int col = 0; col < n; col++) {
+            if (!NQueensProblem.isAttackable(n, board, row, col)) {
+                board[row][col] = true; // place a queen here
 
                 if (NQueensProblem.solveNQueensInternal(n, board, row + 1)) {
                     return true;
                 }
 
-                board[row][i] = false; // remove the queen here since there is no solution that has a queen here
+                board[row][col] = false; // remove the queen here since there is no solution that has a queen here
             }
         }
         return false;
@@ -88,13 +88,13 @@ public class NQueensProblem {
     private static boolean isAttackable(final int n, boolean[][] board, final int row, final int col) {
         return NQueensProblem.isRowAttackable(board, row) ||
                 NQueensProblem.isColumnAttackable(board, col) ||
-                NQueensProblem.isDiagonallyAttackable(n, board, row, col);
+                NQueensProblem.isDiagonalAttackable(n, board, row, col);
     }
 
     /**
      * Determine if the given row can be attacked by a previously placed queen going horizontally
      *
-     * @param board the n-by-n chessboard represented as a 2D boolean array
+     * @param board a chessboard represented as a 2D boolean array
      *              where true means a queen has been placed in that square and false otherwise
      * @param row   the 0-indexed row to check
      * @return whether the row is attackable by a previously placed queen
@@ -111,7 +111,7 @@ public class NQueensProblem {
     /**
      * Determine if the given column can be attacked by a previously placed queen going vertically
      *
-     * @param board the n-by-n chessboard represented as a 2D boolean array
+     * @param board a chessboard represented as a 2D boolean array
      *              where true means a queen has been placed in that square and false otherwise
      * @param col   the 0-indexed column to check
      * @return whether the column is attackable by a previously placed queen
@@ -135,10 +135,10 @@ public class NQueensProblem {
      * @param col   the 0-indexed column of the queen we're considering placing
      * @return whether the square is attackable by a previously placed queen
      */
-    private static boolean isDiagonallyAttackable(final int n,
-                                                  final boolean[][] board,
-                                                  final int row,
-                                                  final int col) {
+    private static boolean isDiagonalAttackable(final int n,
+                                                final boolean[][] board,
+                                                final int row,
+                                                final int col) {
         return NQueensProblem.isNegSlopeDiagonalAttackable(n, board, row, col) ||
                 NQueensProblem.isPosSlopeDiagonalAttackable(n, board, row, col);
     }
@@ -162,7 +162,7 @@ public class NQueensProblem {
         for (int i = -n; i < n; i++) {
             final int nrow = row + i;
             final int ncol = col + i;
-            if (isSquareTaken(n, board, nrow, ncol)) {
+            if (NQueensProblem.isSquareTaken(n, board, nrow, ncol)) {
                 return true;
             }
         }
@@ -189,7 +189,7 @@ public class NQueensProblem {
         for (int i = -n; i < n; i++) {
             final int nrow = row - i;
             final int ncol = col + i;
-            if (isSquareTaken(n, board, nrow, ncol)) {
+            if (NQueensProblem.isSquareTaken(n, board, nrow, ncol)) {
                 return true;
             }
         }
@@ -204,7 +204,7 @@ public class NQueensProblem {
      *              where true means a queen has been placed in that square and false otherwise
      * @param row   the 0-indexed row of the queen we're considering placing
      * @param col   the 0-indexed column of the queen we're considering placing
-     * @return whether the square is already occupied by a queen, returns false if the given square are out of bounds
+     * @return whether the square is already occupied by a queen, returns false if the given square is out of bounds
      */
     private static boolean isSquareTaken(final int n, final boolean[][] board, final int row, final int col) {
         if (row < 0 || row >= n || col < 0 || col >= n) {
@@ -216,7 +216,7 @@ public class NQueensProblem {
     /**
      * Convert a given chessboard to an ASCII String where the queens are represented as the English letter 'Q' and
      * empty squares are denoted by the full stop character '.'
-     * <p>
+     * <p/>
      * Note: each line as a trailing space after it and the last line as a trailing new line after it.
      *
      * @param n     the length of one side of a standard chessboard
