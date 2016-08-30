@@ -27,14 +27,15 @@ public class NQueensProblem {
      * @param n the length of one side of a standard chessboard
      * @throws IllegalArgumentException if n is not between 0 and 32
      */
-    public static void solveNQueens(final int n) {
+    public static String solveNQueens(final int n) {
         if (n <= 0 || n >= 32) {
             throw new IllegalArgumentException("n should be between 0 and 32");
         }
 
         if (n == 2 || n == 3) {
-            System.out.printf("no solution for %d-queens%n", n);
-            return;
+            final String error = String.format("no solution for %d-queens", n);
+            System.out.println(error);
+            return error;
         }
 
         final boolean[][] board = new boolean[n][n];
@@ -43,6 +44,7 @@ public class NQueensProblem {
 
         final String asciiBoard = NQueensProblem.convertBoardToAsciiString(n, board);
         System.out.println(asciiBoard);
+        return asciiBoard;
     }
 
     /**
